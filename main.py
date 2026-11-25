@@ -20,7 +20,17 @@ def resolve_output_path():
     return "/output/entry.txt"
 
 
+def validate_entry(text):
+    """Enforce the competition gate: UTF-8 text, 1-200 chars, not blank."""
+    text.encode("utf-8")
+    if not text.strip():
+        raise ValueError("entry must not be only whitespace")
+    if not 1 <= len(text) <= 200:
+        raise ValueError("entry must be 1-200 characters, got %d" % len(text))
+
+
 def main():
+    validate_entry(ENTRY)
     path = resolve_output_path()
     directory = os.path.dirname(path)
     if directory:
